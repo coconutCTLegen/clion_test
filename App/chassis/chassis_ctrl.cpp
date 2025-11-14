@@ -367,9 +367,10 @@ void ChassisCtrl_c::ChassisModeCalculation()
         }
         return D_value;
     }
+    
 
     /**
-     *  无力模式
+     *  无力模式s
      *  直接将电机关闭，设定值也为0
      */
     void ChassisCtrl_c::F_Chassis_Zero_Force()
