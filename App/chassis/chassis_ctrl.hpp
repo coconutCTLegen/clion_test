@@ -92,7 +92,7 @@ public:
     float Target_Speed_[MotorsPerWheelGroup]; //目标速度   仅调试时方便观看，不参与计算
     bool IsReverseCurrent_[MotorsPerWheelGroup] = {0,0,0,0}; //电机是否反转标志   1表示现在是反向电流
     /* ------------------------裁判系统框架测试用----------------------------*/
-    Dr16_n::dr16_c *rc;                             //遥控器指针
+    Dr16_n::dr16_c *rc_text;                             //遥控器指针
     Referee_n::referee_c *referee_text;             //框架测试用的裁判系统指针
     RoboCmd_c *robocmd_text;                        //框架测试用的机器人命令指针
     /* ------------------------裁判系统框架测试用----------------------------*/
@@ -116,6 +116,7 @@ public:
     void ChassisBehaviorChoose();
     void SwitchChassisMode(ChassisBehavior_e behavior);
     void ChassisModeCalculation();
+    void loop();;
 
     void F_Chassis_Omni_Move();
     void Calculate_FourWheel_Vh(WheelParameters_t *Target, float VX, float VY, float VW);

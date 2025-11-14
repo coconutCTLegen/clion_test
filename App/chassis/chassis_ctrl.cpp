@@ -7,7 +7,7 @@ namespace MM = Motor_n::MotorBaseDef_n;
 void ChassisCtrl_c::ChassisInit()
 {
     /* ------------------------裁判系统框架测试用----------------------------*/
-    rc = Dr16_n::dr16_c::GetInstance();
+    rc_text = Dr16_n::dr16_c::GetInstance();
     referee_text = Referee_n::referee_c::GetInstance();
     robocmd_text = RoboCmd_c::GetInstance();
     /* ------------------------裁判系统框架测试用----------------------------*/
@@ -73,7 +73,7 @@ void ChassisCtrl_c::ChassisInit()
          .Kfb = 0.0f,
          .ActualValueSource = nullptr})
      .SetCANConfig(BSP_n::CanInitConfig_s{
-       .fdcan_handle = &hfdcan2,
+       .fdcan_handle = &hfdcan1,
          })
      .SetMechanicalParams(MM::Motor_Data_t::Motor_Fixed_Param_t{
        .zero_offset = 0.0f,
@@ -92,19 +92,22 @@ void ChassisCtrl_c::ChassisInit()
     WheelConfig.can_init_config.tx_id = 4;
     AGV_Drive_Motor[RF] = new Motor_n::DjiMotor_n::DjiDriver_c(WheelConfig);
 
-
     SteerConfig.can_init_config.tx_id = 1;
     SteerConfig.zero_offset = 6787;
     AGV_Rudder_Motor[LF] = new Motor_n::DjiMotor_n::DjiDriver_c(SteerConfig);
+    AGV_Rudder_Motor[LF]->motor_controller_.SetAngleFeedbackPtr(nullptr);
     SteerConfig.can_init_config.tx_id = 2;
     SteerConfig.zero_offset = 6818;
     AGV_Rudder_Motor[LB] = new Motor_n::DjiMotor_n::DjiDriver_c(SteerConfig);
+    AGV_Rudder_Motor[LB]->motor_controller_.SetAngleFeedbackPtr(nullptr);
     SteerConfig.can_init_config.tx_id = 3;
     SteerConfig.zero_offset = 660;
     AGV_Rudder_Motor[RB] = new Motor_n::DjiMotor_n::DjiDriver_c(SteerConfig);
+    AGV_Rudder_Motor[RB]->motor_controller_.SetAngleFeedbackPtr(nullptr);
     SteerConfig.can_init_config.tx_id = 4;
     SteerConfig.zero_offset = 6578;
     AGV_Rudder_Motor[RF] = new Motor_n::DjiMotor_n::DjiDriver_c(SteerConfig);
+    AGV_Rudder_Motor[RF]->motor_controller_.SetAngleFeedbackPtr(nullptr);
 
     ChassisMotorEnable();
 
@@ -123,6 +126,14 @@ void ChassisCtrl_c::ChassisInit()
     //
     // Core::Control::Power::Manager manager(motors_, Core::Control::Power::Division::SENTRY);// 功率管理器实例
     // Core::Control::Power::init(manager);
+}
+
+void ChassisCtrl_c::loop()
+{
+    ChassisMotorEnable();
+    CorrectChassisRudderZeroOffset();
+    ChassisBehaviorChoose();
+    ChassisModeCalculation();
 }
 
 void ChassisCtrl_c::ChassisMotorEnable()
@@ -187,9 +198,9 @@ void ChassisCtrl_c::CorrectChassisRudderZeroOffset()
         static ChassisBehavior_e Behavior;
         /*手柄----------------------------------------------------------------------------- */
         /*左上开关*/
-        switch (this->rc->dt7_data_.rc.s1)
+        switch (this->robocmd_text->dt7_data_->s1)
         {
-            case RC_SW_MID:
+            case DT7_SW_MID:
                 Behavior = ChassisOmniMove;       //全向移动
                 break;
             default:   //数据有误直接无力
@@ -198,9 +209,9 @@ void ChassisCtrl_c::CorrectChassisRudderZeroOffset()
         }
     
         // 防止拨杆拨到一点点，让哨兵乱撞
-        if ((((user_abs(this->rc->dt7_data_.rc.ch[2])) < 5) && ((user_abs(this->rc->dt7_data_.rc.ch[3])) < 5) &&
-                 (this->rc->dt7_data_.rc.s1 != RC_SW_UP) && (this->rc->dt7_data_.rc.s1 != RC_SW_DOWN) && (this->rc->dt7_data_.rc.s2 != RC_SW_MID) &&
-                 (this->rc->dt7_data_.rc.s2 != RC_SW_DOWN) &&
+        if ((((user_abs(this->robocmd_text->dt7_data_->ch[2])) < 5) && ((user_abs(this->robocmd_text->dt7_data_->ch[3])) < 5) &&
+                 (this->robocmd_text->dt7_data_->s1 != DT7_SW_UP) && (this->robocmd_text->dt7_data_->s1 != DT7_SW_DOWN) && (this->robocmd_text->dt7_data_->s2 != DT7_SW_MID) &&
+                 (this->robocmd_text->dt7_data_->s2 != DT7_SW_DOWN) &&
                  ((user_abs(AGV_Drive_Motor[LF]->motor_data_.motor_raw_data.feedback_ecd) + user_abs(AGV_Drive_Motor[LB]->motor_data_.motor_raw_data.feedback_ecd) + user_abs(AGV_Drive_Motor[RB]->motor_data_.motor_raw_data.feedback_ecd) + user_abs(AGV_Drive_Motor[RF]->motor_data_.motor_raw_data.feedback_ecd)) < 7500)))
         {
             Behavior = ChassisPositionLock; // 底盘自锁
@@ -227,12 +238,12 @@ void ChassisCtrl_c::CorrectChassisRudderZeroOffset()
                 /*3508 自锁最外层变换并添加角度环   6020 位置环的反馈设置为MOTOR_FEED  */
                 for (int i = 0; i < 4; i++)
                 {
-                    Target_Speed_[i] = 0; //自锁时速度设为0
-                    AGV_Drive_Motor[i]->DjiMotorSelfLock();
-                    AGV_Rudder_Motor[i]->DjiMotorSelfLock();
                     // 修改位置环的电机反馈类型
                     AGV_Rudder_Motor[i]->motor_controller_.SetAngleFeedbackPtr(&AGV_Rudder_Motor[i]->motor_data_.motor_processed_data.total_ecd); //舵电机用电机反馈过来的角度进行自锁
                     AGV_Rudder_Motor[i]->motor_controller_.speed_PID->GetMeasure()->Kp = 0.5;
+                    Target_Speed_[i] = 0; //自锁时速度设为0
+                    AGV_Drive_Motor[i]->DjiMotorSelfLock();
+                    AGV_Rudder_Motor[i]->DjiMotorSelfLock();
                 }
             }
 
@@ -243,10 +254,10 @@ void ChassisCtrl_c::CorrectChassisRudderZeroOffset()
                 /*3508 删除角度环、取消自锁，设置状态为Enable   6020 位置环反馈设置成NONE_FEED  */
                 for (int i = 0; i < 4; i++)
                 {
-                    AGV_Drive_Motor[i]->DjiMotorClearSelfLock();
-                    AGV_Rudder_Motor[i]->DjiMotorClearSelfLock();
                     AGV_Rudder_Motor[i]->motor_controller_.SetAngleFeedbackPtr(nullptr);         //舵电机用之前已经计算好的目标之间的差值即目标角度-实际角度
                     AGV_Rudder_Motor[i]->motor_controller_.speed_PID->GetMeasure()->Kp = 50;
+                    AGV_Drive_Motor[i]->DjiMotorClearSelfLock();
+                    AGV_Rudder_Motor[i]->DjiMotorClearSelfLock();
                 }
             }
         }
@@ -263,8 +274,8 @@ void ChassisCtrl_c::CorrectChassisRudderZeroOffset()
  */
 void ChassisCtrl_c::ChassisModeCalculation()
 {
-    Chassis_Rc_x_ =  static_cast<float>(rc->dt7_data_.rc.ch[2]) ; //-660~660  左右
-    Chassis_Rc_y_ = - static_cast<float>(rc->dt7_data_.rc.ch[3]) ; //-660~660 前后
+    Chassis_Rc_x_ =  static_cast<float>(robocmd_text->dt7_data_->ch[2]) ; //-660~660  左右
+    Chassis_Rc_y_ = - static_cast<float>(robocmd_text->dt7_data_->ch[3]) ; //-660~660 前后
 
     user_value_limit(Chassis_Rc_x_, -660.0f, 660.0f);
     user_value_limit(Chassis_Rc_y_, -660.0f, 660.0f);

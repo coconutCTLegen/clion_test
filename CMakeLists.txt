@@ -37,7 +37,14 @@ enable_language(C CXX ASM)
 add_compile_options(-w)
 
 # Create an executable object type
-add_executable(${CMAKE_PROJECT_NAME})
+add_executable(${CMAKE_PROJECT_NAME}
+        Core/Src/fault_debug.cs
+        Core/Inc/fault_debug.h)
+
+# Generate .map file automatically
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+    "-Wl,-Map=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.map"
+)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(${CMAKE_SOURCE_DIR}/cmake/stm32cubemx)
@@ -169,9 +176,8 @@ USER_ADD_DIR(${CMAKE_SOURCE_DIR}/ACE_ECF_26/Algorithm/user_maths/fifo)
 # ==============================
 # 自己的文件加这里（TASK)
 # ==============================
-USER_ADD_DIR(${CMAKE_SOURCE_DIR}/TASK/chassis_app)
-USER_ADD_DIR(${CMAKE_SOURCE_DIR}/TASK/chassis_task)
-USER_ADD_DIR(${CMAKE_SOURCE_DIR}/TASK/task_init)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/chassis)
+USER_ADD_DIR(${CMAKE_SOURCE_DIR}/App/task_init)
 
 # 判断芯片型号目录是否存在
 if(EXISTS "${CMAKE_SOURCE_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c")

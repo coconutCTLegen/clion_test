@@ -1,30 +1,33 @@
 
 
-Breakpoint=C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/ACE-ECF-26/Module/dr16/dr16.cpp:25:9, State=BP_STATE_DISABLED
-OpenDocument="startup_stm32h723xx.s", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/startup_stm32h723xx.s", Line=51
+OpenDocument="chassis_task.cpp", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/TASK/chassis_task/chassis_task.cpp", Line=0
+OpenDocument="chassis_task.hpp", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/TASK/chassis_task/chassis_task.hpp", Line=0
+OpenDocument="chassis_ctrl.hpp", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/TASK/chassis_app/chassis_ctrl.hpp", Line=104
 OpenDocument="main.c", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/Core/Src/main.c", Line=63
+OpenDocument="bsp_usart.cpp", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/ACE_ECF_26/Bsp/USART/bsp_usart.cpp", Line=24
+OpenDocument="stm32h7xx_it.c", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/Core/Src/stm32h7xx_it.c", Line=354
+OpenDocument="startup_stm32h723xx.s", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/startup_stm32h723xx.s", Line=51
 OpenDocument="tasks.c", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3422
-OpenDocument="stm32h7xx_it.c", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/Core/Src/stm32h7xx_it.c", Line=351
-OpenDocument="dr16.hpp", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/ACE-ECF-26/module/dr16/dr16.hpp", Line=0
-OpenDocument="stm32h7xx_hal_uart.c", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c", Line=2381
-OpenDocument="dr16.cpp", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/ACE-ECF-26/Module/dr16/dr16.cpp", Line=14
+OpenDocument="stm32h7xx_hal_uart.c", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c", Line=2383
+OpenDocument="dr16.cpp", FilePath="C:/Users/26278/OneDrive/Desktop/L/ACE/ForceContorl_PowerContorl/ACE_ECF_26/Module/dr16/dr16.cpp", Line=33
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=766, h=940, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=1, w=405, h=591, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=766, h=940, TabPos=2, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
-OpenWindow="Local Data", DockArea=RIGHT, x=0, y=0, w=405, h=592, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=0, w=766, h=940, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Data Sampling", DockArea=LEFT, x=0, y=1, w=766, h=197, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Console", DockArea=LEFT, x=0, y=1, w=766, h=197, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=586, h=721, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=1, w=405, h=455, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=586, h=721, TabPos=2, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
+OpenWindow="Local Data", DockArea=RIGHT, x=0, y=0, w=405, h=455, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=0, w=586, h=721, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=LEFT, x=0, y=1, w=586, h=143, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Console", DockArea=LEFT, x=0, y=1, w=586, h=143, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[260;100;100;100;1384]
-TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh";"Access"], ColWidths=[243;206;149;180;100]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh";"Access"], ColWidths=[333;206;149;168;100]
 TableHeader="Vector Catches", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;500]
-TableHeader="Break & Tracepoints", SortCol="Extras", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;100;100;550]
+TableHeader="Break & Tracepoints", SortCol="Extras", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;100;100;466]
+TableHeader="Local Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Access";"Scope"], ColWidths=[199;160;100;100;174;100;100]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
-TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;366]
 TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time"], ColWidths=[100;100]
 TableHeader="Data Sampling Setup", SortCol="Min", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[839;100;100;100;100;100;120;140;140]
-TableHeader="Local Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Access";"Scope"], ColWidths=[199;160;100;100;174;100;100]
-WatchedExpression="Dr16Instance", RefreshRate=1, Window=Watched Data 1
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;366]
+WatchedExpression="Dr16Instance", Window=Watched Data 1
+WatchedExpression="ChassisInstance", RefreshRate=1, Window=Watched Data 1
